@@ -1,0 +1,84 @@
+digraph SmartCity {
+graph [rankdir=TB, bgcolor="white", pad=0.4, nodesep=0.35, ranksep=0.85, splines=polyline, compound=true, newrank=true, fontname="Arial", fontsize=22, labelloc=t, label="Smart City Monitoring  |  UML Class Diagram
+26 production types | Java 17 | Observer + Visitor"];
+node [shape=plain, fontname="Arial", fontsize=14];
+edge [color="#64748b", fontcolor="#475569", fontname="Arial", fontsize=11, arrowsize=0.8, penwidth=1.15];
+subgraph cluster_app {
+label="default package  |  Application"; color="#64748b"; bgcolor="#f8fafc"; style=rounded; penwidth=1.3; fontsize=17; margin=22;
+Main [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#64748b"><TR><TD BGCOLOR="#e2e8f0"><B>Main</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12"><U>+ main(args: String[]): void</U><BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+MonitoringSimulation [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#64748b"><TR><TD BGCOLOR="#e2e8f0"><B>MonitoringSimulation</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- executor: ExecutorService<BR ALIGN="LEFT"/>- producers: List&lt;Runnable&gt;<BR ALIGN="LEFT"/>- iterations: int<BR ALIGN="LEFT"/>- timeoutSeconds: int<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ run(): void<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+}
+subgraph cluster_observer {
+label="observer  |  Events and listeners"; color="#2563eb"; bgcolor="#f8fafc"; style=rounded; penwidth=1.3; fontsize=17; margin=22;
+Subject [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><FONT POINT-SIZE="11">&lt;&lt;interface&gt;&gt;</FONT><BR/><B>Subject&lt;T&gt;</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ subscribe(type, observer): void<BR ALIGN="LEFT"/>+ unsubscribe(type, observer): void<BR ALIGN="LEFT"/>+ notifyListeners(event: T): void<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+Observer [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><FONT POINT-SIZE="11">&lt;&lt;interface&gt;&gt;</FONT><BR/><B>Observer&lt;T&gt;</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ update(event: T): void<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+AbstractSubject [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><FONT POINT-SIZE="11">&lt;&lt;abstract&gt;&gt;</FONT><BR/><B>AbstractSubject</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- registry: Map<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ notifyListeners(event): void<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+Sensor [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><B>Sensor</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- id, districtId: String<BR ALIGN="LEFT"/>- type: EventType<BR ALIGN="LEFT"/>- threshold: double<BR ALIGN="LEFT"/>- unit: String<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ measure(value: double): void<BR ALIGN="LEFT"/>+ markOffline(): void<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+CityDashboard [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><B>CityDashboard</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- output: PrintStream<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ update(event): void<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+StatisticsTracker [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><B>StatisticsTracker</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- counts: Map<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ update(event): void<BR ALIGN="LEFT"/>+ getCount(type): int<BR ALIGN="LEFT"/>+ getTotalCount(): int<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+LoggingService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><B>LoggingService</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- events: List&lt;SensorEvent&gt;<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ update(event): void<BR ALIGN="LEFT"/>+ getEvents(): List&lt;SensorEvent&gt;<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+DistrictAggregator [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><B>DistrictAggregator</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- id: String<BR ALIGN="LEFT"/>- districtCounts: Map<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ update(event): void<BR ALIGN="LEFT"/>+ getCount(districtId): int<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+AlertService [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#ffedd5"><B>AlertService</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- id: String<BR ALIGN="LEFT"/>- districts: Map<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ update(event): void<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+SensorEvent [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><FONT POINT-SIZE="11">&lt;&lt;immutable&gt;&gt;</FONT><BR/><B>SensorEvent</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- type: EventType<BR ALIGN="LEFT"/>- sourceId: String<BR ALIGN="LEFT"/>- districtId: String<BR ALIGN="LEFT"/>- timestamp: LocalDateTime<BR ALIGN="LEFT"/>- message: String<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+EventType [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#2563eb"><TR><TD BGCOLOR="#dbeafe"><FONT POINT-SIZE="11">&lt;&lt;enum&gt;&gt;</FONT><BR/><B>EventType</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">AIR_POLLUTION_HIGH<BR ALIGN="LEFT"/>TRAFFIC_JAM<BR ALIGN="LEFT"/>WATER_LEVEL_CRITICAL<BR ALIGN="LEFT"/>SENSOR_OFFLINE<BR ALIGN="LEFT"/>DISTRICT_SUMMARY<BR ALIGN="LEFT"/>INSPECTION_COMPLETED<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ isSensorEvent(): boolean<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+}
+subgraph cluster_visitor {
+label="visitor  |  Data tree and operations"; color="#0f766e"; bgcolor="#f8fafc"; style=rounded; penwidth=1.3; fontsize=17; margin=22;
+CityElement [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><FONT POINT-SIZE="11">&lt;&lt;abstract&gt;&gt;</FONT><BR/><B>CityElement</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- id: String<BR ALIGN="LEFT"/>- name: String<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ accept(visitor): R<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+City [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>City</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- districts: List&lt;District&gt;<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ getDistricts(): List&lt;District&gt;<BR ALIGN="LEFT"/>+ accept(visitor): R<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+District [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>District</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- devices: List&lt;Device&gt;<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ getDevices(): List&lt;Device&gt;<BR ALIGN="LEFT"/>+ accept(visitor): R<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+Device [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><FONT POINT-SIZE="11">&lt;&lt;abstract&gt;&gt;</FONT><BR/><B>Device</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- powerWatts: double<BR ALIGN="LEFT"/>- annualMaintenanceCost: double<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+StreetLight [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>StreetLight</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- operatingHours: int<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ accept(visitor): R<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+TrafficSignal [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>TrafficSignal</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- faultySections: int<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ accept(visitor): R<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+AirSensorNode [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>AirSensorNode</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- daysSinceCalibration: int<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ accept(visitor): R<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+WaterSensorNode [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>WaterSensorNode</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- waterDamageDetected: boolean<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ accept(visitor): R<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+CityVisitor [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><FONT POINT-SIZE="11">&lt;&lt;interface&gt;&gt;</FONT><BR/><B>CityVisitor&lt;R&gt;</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ visit(City): R<BR ALIGN="LEFT"/>+ visit(District): R<BR ALIGN="LEFT"/>+ visit(StreetLight): R<BR ALIGN="LEFT"/>+ visit(TrafficSignal): R<BR ALIGN="LEFT"/>+ visit(AirSensorNode): R<BR ALIGN="LEFT"/>+ visit(WaterSensorNode): R<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+EnergyConsumptionVisitor [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>EnergyConsumptionVisitor</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ visit(City): Double<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+MaintenanceCostVisitor [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>MaintenanceCostVisitor</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">- annualCost: double<BR ALIGN="LEFT"/>- deviceCount: int<BR ALIGN="LEFT"/></FONT></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ visit(City): Double<BR ALIGN="LEFT"/>+ getDeviceCount(): int<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+InspectionVisitor [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>InspectionVisitor</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ visit(District): List&lt;Device&gt;<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+CityJsonExportVisitor [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="8" COLOR="#0f766e"><TR><TD BGCOLOR="#ccfbf1"><B>CityJsonExportVisitor</B></TD></TR><TR><TD ALIGN="LEFT" BALIGN="LEFT" BGCOLOR="white"><FONT POINT-SIZE="12">+ visit(City): String<BR ALIGN="LEFT"/></FONT></TD></TR></TABLE>>];
+}
+Subject -> AbstractSubject [dir=back, arrowtail=empty, style=dashed];
+AbstractSubject -> Sensor [dir=back, arrowtail=empty, style=solid];
+AbstractSubject -> DistrictAggregator [dir=back, arrowtail=empty, style=solid];
+AbstractSubject -> AlertService [dir=back, arrowtail=empty, style=solid];
+Observer -> CityDashboard [dir=back, arrowtail=empty, style=dashed];
+Observer -> StatisticsTracker [dir=back, arrowtail=empty, style=dashed];
+Observer -> LoggingService [dir=back, arrowtail=empty, style=dashed];
+Observer -> DistrictAggregator [dir=back, arrowtail=empty, style=dashed];
+Observer -> AlertService [dir=back, arrowtail=empty, style=dashed];
+AbstractSubject -> Observer [dir=back, arrowtail=odiamond, label="subscribers 0..*", constraint=false];
+AbstractSubject -> SensorEvent [style=dashed, arrowhead=vee, label="delivers", constraint=false];
+Sensor -> SensorEvent [style=dashed, arrowhead=vee, label="creates", constraint=false];
+SensorEvent -> EventType [arrowhead=vee, label="type", constraint=false];
+CityElement -> City [dir=back, arrowtail=empty, style=solid];
+CityElement -> District [dir=back, arrowtail=empty, style=solid];
+CityElement -> Device [dir=back, arrowtail=empty, style=solid];
+Device -> StreetLight [dir=back, arrowtail=empty, style=solid];
+Device -> TrafficSignal [dir=back, arrowtail=empty, style=solid];
+Device -> AirSensorNode [dir=back, arrowtail=empty, style=solid];
+Device -> WaterSensorNode [dir=back, arrowtail=empty, style=solid];
+City -> District [dir=back, arrowtail=odiamond, label="districts 0..*"];
+District -> Device [dir=back, arrowtail=odiamond, label="devices 0..*"];
+CityElement -> CityVisitor [style=dashed, arrowhead=vee, label="accept", constraint=false];
+CityVisitor -> EnergyConsumptionVisitor [dir=back, arrowtail=empty, style=dashed];
+CityVisitor -> MaintenanceCostVisitor [dir=back, arrowtail=empty, style=dashed];
+CityVisitor -> InspectionVisitor [dir=back, arrowtail=empty, style=dashed];
+CityVisitor -> CityJsonExportVisitor [dir=back, arrowtail=empty, style=dashed];
+AlertService -> InspectionVisitor [style=dashed, arrowhead=vee, label="creates per event", constraint=false, color="#c2410c", fontcolor="#9a3412", penwidth=1.8, tailport=w, headport=e];
+AlertService -> District [arrowhead=vee, label="finds by districtId", constraint=false, color="#c2410c", fontcolor="#9a3412", penwidth=1.8, tailport=w, headport=e];
+Main -> MonitoringSimulation [style=dashed, arrowhead=vee, label="starts", constraint=false];
+{rank=same; Main; MonitoringSimulation;}
+{rank=same; Subject; Observer;}
+{rank=same; SensorEvent; EventType;}
+{rank=same; Sensor; DistrictAggregator; AlertService;}
+{rank=same; CityDashboard; StatisticsTracker; LoggingService;}
+{rank=same; StreetLight; TrafficSignal; AirSensorNode; WaterSensorNode;}
+Main -> Subject [style=invis, minlen=1];
+Main -> CityVisitor [style=invis, minlen=1];
+Main -> CityElement [style=invis, minlen=1];
+Main -> SensorEvent [style=invis, minlen=1];
+Sensor -> CityDashboard [style=invis];
+DistrictAggregator -> StatisticsTracker [style=invis];
+AlertService -> LoggingService [style=invis];
+}

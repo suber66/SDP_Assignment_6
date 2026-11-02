@@ -35,6 +35,12 @@ public class CityJsonExportVisitor implements CityVisitor<String> {
         return exportDevice("WaterSensorNode", sensor, "waterDamageDetected", damaged);
     }
 
+    @Override
+    public String visit(NewCityElement newCityElement) {
+        String watts = Double.toString(newCityElement.getPowerWatts());
+        return exportDevice("NewCityElement", newCityElement, "powerWatts", watts);
+    }
+
     private String exportContainer(String type, CityElement container, List<? extends CityElement> children) {
         StringBuilder json = new StringBuilder("{\n");
         json.append(elementFields(type, container));

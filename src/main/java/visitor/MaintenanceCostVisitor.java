@@ -40,6 +40,11 @@ public class MaintenanceCostVisitor implements CityVisitor<Double> {
         return addDevice(sensor);
     }
 
+    @Override
+    public Double visit(NewCityElement newCityElement) {
+        return addDevice(newCityElement);
+    }
+
     public int getDeviceCount() {
         return deviceCount;
     }

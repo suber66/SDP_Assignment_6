@@ -38,4 +38,9 @@ public class EnergyConsumptionVisitor implements CityVisitor<Double> {
     public Double visit(WaterSensorNode sensor) {
         return sensor.getPowerWatts();
     }
+
+    @Override
+    public Double visit(NewCityElement newCityElement) {
+        return newCityElement.getPowerWatts();
+    }
 }

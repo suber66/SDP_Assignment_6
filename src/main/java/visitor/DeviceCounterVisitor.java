@@ -39,4 +39,9 @@ public class DeviceCounterVisitor implements CityVisitor<Integer>{
     public Integer visit(WaterSensorNode sensor) {
         return 1;
     }
+
+    @Override
+    public Integer visit(NewCityElement newCityElement) {
+        return 1;
+    }
 }

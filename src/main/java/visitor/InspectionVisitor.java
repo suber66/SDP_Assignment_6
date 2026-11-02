@@ -56,4 +56,9 @@ public class InspectionVisitor implements CityVisitor<List<Device>> {
         }
         return List.of();
     }
+
+    @Override
+    public List<Device> visit(NewCityElement newCityElement) {
+        return List.of();
+    }
 }

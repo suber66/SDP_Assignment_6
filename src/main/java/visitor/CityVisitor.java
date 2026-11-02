@@ -7,4 +7,5 @@ public interface CityVisitor<R> {
     R visit(TrafficSignal signal);
     R visit(AirSensorNode sensor);
     R visit(WaterSensorNode sensor);
+    R visit(NewCityElement newCityElement);
 }
